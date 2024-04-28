@@ -75,3 +75,7 @@ class Repository:
     def get_cantidad_productos_vendidos_por_fecha(start_period, end_period):
         response = Provider.execute(Queries.get_cantidad_productos_vendidos_por_fecha(start_period, end_period))
         return response
+    
+    @staticmethod
+    def get_total_products_sold():
+        return Provider.execute(Queries.get_total_products_sold())

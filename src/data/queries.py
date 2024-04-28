@@ -68,6 +68,20 @@ class Queries:
         """
 
     @staticmethod
+    def get_total_products_sold():
+        return """
+            {
+                var(func: has(invoice)) {
+                    q as quantity
+                }
+
+                response() {
+                    quantity: sum(val(q))
+                }
+            }
+        """
+
+    @staticmethod
     def get_providers_per_location():
         return """
             {

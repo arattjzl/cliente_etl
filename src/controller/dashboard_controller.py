@@ -235,3 +235,18 @@ class DashboardController:
         return {
             "cantidad_productos_vendidos": json_response["data"]["response"][0]["count"]
         }
+    
+    @staticmethod
+    def load_total_products_sold():
+        response = Repository.get_total_products_sold()
+        if response.status_code != 200:
+            return {"products_sold": 0}
+        
+        json_response = json.loads(response.text)
+        
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        return {
+            "products_sold": json_response["data"]["response"][0]["quantity"]
+        }

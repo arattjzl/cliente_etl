@@ -30,8 +30,8 @@ dashboard = Dashboard()
 app.layout = dashboard.document()
 
 @app.callback(
-    Output('numero-productos', 'children'),  # Output: Propiedad 'children' del Div
-    [Input('date-prod-vendidos-input-2', 'date'),
+    Output('numero-productos', 'children'),
+    [Input('date-prod-vendidos-input-1', 'date'),
     Input('date-prod-vendidos-input-2', 'date')]
 )
 def obtener_numero_productos_vendidos_por_fecha_wrapper(fecha_inicio, fecha_fin):

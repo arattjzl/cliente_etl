@@ -15,7 +15,7 @@ from src.controller.dashboard_controller import DashboardController
 import dash_bootstrap_components as dbc
 import plotly.express as px
 from dash import dcc, html
-from datetime import date
+from datetime import datetime, date
 
 class Dashboard:
 
@@ -33,14 +33,14 @@ class Dashboard:
                 html.Br(),
                 self._highlights_cards(),
                 html.Br(),
-                self._header_subtitle2("Numero de productos vendidos en una fecha dada:",'id-titulo1'),
+                self._header_subtitle2("Reporte de venta por fecha",'id-titulo1'),
                 html.Div([
                         "Selecciona una fecha de inicio: ",
                          
                          dcc.DatePickerSingle(#input de tip date para elegir la fecha
                             id='date-prod-vendidos-input-1',
                             min_date_allowed=date(1995, 8, 5),
-                            initial_visible_month=date(2020, 8, 5),
+                            initial_visible_month=datetime.now(),
                             placeholder='Fecha Inicio',
                             clearable=True,
                         ),
@@ -49,11 +49,12 @@ class Dashboard:
                         dcc.DatePickerSingle(#input de tip date para elegir la fecha
                             id='date-prod-vendidos-input-2',
                             min_date_allowed=date(1995, 8, 5),
-                            initial_visible_month=date(2020, 8, 6),
+                            initial_visible_month=datetime.now(),
                             placeholder='Fecha Fin',
                             clearable=True,
                         ),
                 ]),
+                html.Br(),
                 dbc.Card(
                     [
                         dbc.CardBody(
@@ -61,10 +62,11 @@ class Dashboard:
                                 html.H2(id='numero-productos'),
                             ]
                         ),
-                        dbc.CardFooter('nada'),
+                        dbc.CardFooter('Total'),
                     ]
                 ),
                 html.Br(),
+                self._panel_products_sold(),
                 html.Br(),
                 html.Div(
                     [
@@ -347,6 +349,37 @@ class Dashboard:
                                         )
 
                                         for product in most_selled
+                                    ]
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+    
+    def _panel_products_sold(self):
+        products_sold = DashboardController.load_total_products_sold()
+        total = products_sold['products_sold']
+        return html.Div(
+            [
+                dbc.Card(
+                    [
+                        dbc.CardBody(
+                            [
+                                html.H3("Productos vendidos", className="card-title"),
+                                html.Br(),
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            [
+                                                dbc.Row(
+                                                    [
+                                                        html.H5(f"- {'Cantidad de productos vendidos:'} {total}", style={"font-weight":"bold"}),
+                                                    ]
+                                                ),
+                                            ]
+                                        )
                                     ]
                                 )
                             ]
