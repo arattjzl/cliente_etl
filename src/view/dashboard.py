@@ -38,7 +38,7 @@ class Dashboard:
                         "Selecciona una fecha de inicio: ",
                          
                          dcc.DatePickerSingle(#input de tip date para elegir la fecha
-                            id='input-date-productos-vendidos-1',
+                            id='date-prod-vendidos-input-1',
                             min_date_allowed=date(1995, 8, 5),
                             initial_visible_month=date(2020, 8, 5),
                             placeholder='Fecha Inicio',
@@ -47,15 +47,25 @@ class Dashboard:
                         " Selecciona una fecha final: ",
                          
                         dcc.DatePickerSingle(#input de tip date para elegir la fecha
-                            id='input-date-productos-vendidos-2',
+                            id='date-prod-vendidos-input-2',
                             min_date_allowed=date(1995, 8, 5),
                             initial_visible_month=date(2020, 8, 6),
                             placeholder='Fecha Fin',
                             clearable=True,
                         ),
                 ]),
-                self.obtener_numero_productos_vendidos_por_fecha(),
-                html.Br(),html.Br(),
+                dbc.Card(
+                    [
+                        dbc.CardBody(
+                            [
+                                html.H2(id='numero-productos'),
+                            ]
+                        ),
+                        dbc.CardFooter('nada'),
+                    ]
+                ),
+                html.Br(),
+                html.Br(),
                 html.Div(
                     [
                         dbc.Row(
@@ -346,20 +356,10 @@ class Dashboard:
             ]
         )
 
-    def obtener_numero_productos_vendidos_por_fecha(self):
-        productos_vendidos_fecha = DashboardController.get_cantidad_productos_vendidos_por_fecha('2024-01-01', '2024-04-01')
-        valor_productos_vendidos = next(iter(productos_vendidos_fecha.values()))
-        return html.Div(
-            [
-                dbc.Row(
-                    [
-                        dbc.Col(
-                            self._card_value_id("Numero productos", f'{valor_productos_vendidos}','numero-productos')
-                        ),
-                    ]
-                ),
-            ]
-        )
+    def obtener_numero_productos_vendidos_por_fecha(self, fecha_inicio, fecha_fin):
+        productos_vendidos_fecha = DashboardController.get_cantidad_productos_vendidos_por_fecha(fecha_inicio, fecha_fin)
+        valor_productos_vendidos = productos_vendidos_fecha['cantidad_productos_vendidos']
+        return valor_productos_vendidos if valor_productos_vendidos else 0
         
 
     def _card_value_id(self, label, value,id):

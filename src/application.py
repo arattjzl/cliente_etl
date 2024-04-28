@@ -14,6 +14,7 @@
 from src.view.dashboard import Dashboard
 import dash_bootstrap_components as dbc
 import dash
+from dash import Input, Output, callback
 
 app = dash.Dash(
     external_stylesheets=[dbc.themes.LUX],
@@ -28,3 +29,10 @@ dashboard = Dashboard()
 
 app.layout = dashboard.document()
 
+@app.callback(
+    Output('numero-productos', 'children'),  # Output: Propiedad 'children' del Div
+    [Input('date-prod-vendidos-input-2', 'date'),
+    Input('date-prod-vendidos-input-2', 'date')]
+)
+def obtener_numero_productos_vendidos_por_fecha_wrapper(fecha_inicio, fecha_fin):
+    return dashboard.obtener_numero_productos_vendidos_por_fecha(fecha_inicio, fecha_fin)
