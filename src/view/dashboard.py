@@ -29,11 +29,39 @@ class Dashboard:
                 html.Br(),
                 self._header_title("Sales Report"),
                 html.Div(html.Hr()),
-                self._header_subtitle("Sales summary financial report"),
+                self._header_subtitle("a) Reporte de ventas"),
                 html.Br(),
                 self._highlights_cards(),
                 html.Br(),
-                self._header_subtitle2("Reporte de venta por fecha",'id-titulo1'),
+                html.Div(
+                    [
+                        dbc.Row(
+                            [
+                                dbc.Col(
+                                    self._panel_most_selled_products(),
+                                    width=12
+                                ),
+                            ]
+                        )
+                    ]
+                ),
+                html.Br(),
+                self._panel_products_sold(),
+                html.Br(),
+                html.Div(
+                    [
+                        dbc.Row(
+                            [
+                                dbc.Col(
+                                    self._bar_chart_sales_per_location(),
+                                    width=12
+                                ),
+                            ]
+                        )
+                    ]
+                ),
+                html.Br(),
+                html.H2("Extra: Ventas por periodo de tiempo",'id-titulo1'),
                 html.Div([
                         "Selecciona una fecha de inicio: ",
                          
@@ -66,27 +94,12 @@ class Dashboard:
                     ]
                 ),
                 html.Br(),
-                self._panel_products_sold(),
-                html.Br(),
                 html.Div(
                     [
                         dbc.Row(
                             [
                                 dbc.Col(
                                     self._bar_chart_providers_by_location(),
-                                    width=12
-                                ),
-                            ]
-                        )
-                    ]
-                ),
-                html.Br(),
-                html.Div(
-                    [
-                        dbc.Row(
-                            [
-                                dbc.Col(
-                                    self._bar_chart_sales_per_location(),
                                     width=12
                                 ),
                             ]
@@ -124,18 +137,6 @@ class Dashboard:
                     ]
                 ),
                 html.Br(),
-                html.Div(
-                    [
-                        dbc.Row(
-                            [
-                                dbc.Col(
-                                    self._panel_most_selled_products(),
-                                    width=12
-                                ),
-                            ]
-                        )
-                    ]
-                ),
                 html.Br(),
             ]
         )
@@ -235,7 +236,7 @@ class Dashboard:
             [
                 dbc.CardBody(
                     [
-                        html.H3("Sales per location", className="card-title"),
+                        html.H3("d) Ventas por ubicación", className="card-title"),
                         dcc.Graph(
                             id='sales-per-location',
                             figure=bar_char_fig
@@ -334,7 +335,7 @@ class Dashboard:
                     [
                         dbc.CardBody(
                             [
-                                html.H3("Most selled", className="card-title"),
+                                html.H3("b) Productos más vendidos", className="card-title"),
                                 html.Br(),
                                 html.Div(
                                     [
@@ -367,7 +368,7 @@ class Dashboard:
                     [
                         dbc.CardBody(
                             [
-                                html.H3("Productos vendidos", className="card-title"),
+                                html.H3("c) Cantidad de productos vendidos", className="card-title"),
                                 html.Br(),
                                 html.Div(
                                     [
